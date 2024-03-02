@@ -1,6 +1,8 @@
 export default function NavBar(){
     return(
         <>
+
+
             <nav style={{
                 backgroundColor: "#333",
                 padding: "10px",
