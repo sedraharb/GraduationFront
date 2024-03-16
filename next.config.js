@@ -16,7 +16,7 @@ const nextConfig = {
     images: {
         unoptimized: true
     },
-
+    transpilePackages: ['@mui/x-charts']
 }
 
 

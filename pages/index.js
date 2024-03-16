@@ -1,7 +1,7 @@
-import {Layout} from "../layouts";
 import {useRouter} from "next/router";
 import {useEffect} from "react";
 import Cookies from "js-cookie";
+
 
 export default function Home() {
     const router = useRouter();
@@ -13,7 +13,7 @@ export default function Home() {
     }, []);
 
     return (<>
-      <Layout/>
+
 
     </>)
 }

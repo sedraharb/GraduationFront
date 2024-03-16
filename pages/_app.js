@@ -5,7 +5,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import {theme} from '/theme/theme';
 import {ThemeProvider} from '@mui/material/styles';
 import getConfig from 'next/config';
-
+import {Layout} from "../layouts";
+import LoginPage from "./auth/login";
 const {publicRuntimeConfig} = getConfig();
 
 function MyApp({Component, pageProps}) {
@@ -27,21 +28,40 @@ function MyApp({Component, pageProps}) {
     console.log(`%cprojecy name \nVersion ${publicRuntimeConfig.version}+${publicRuntimeConfig.build}\nUpdated ${publicRuntimeConfig.updated_at} `,
         style
     );
-
+    if (Component!=LoginPage){
     return (
         <>
+
             <ThemeProvider theme={theme}>
+
                 <CssBaseline/>
 
-                {/*<Layout></Layout>*/}
-                <Component {...pageProps} />
+                <Layout>
+                    <Component {...pageProps}/>
+                </Layout>
+
 
                 <ToastContainer/>
             </ThemeProvider>
 
         </>
 
-    )
+    )}
+    return (
+        <>
+            <ThemeProvider theme={theme}>
+                <CssBaseline/>
+
+
+                    <Component {...pageProps}/>
+
+
+
+                <ToastContainer/>
+            </ThemeProvider>
+
+        </>
+    );
 }
 
 export default MyApp

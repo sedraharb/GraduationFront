@@ -1,11 +1,14 @@
 
 import { createTheme } from '@mui/material/styles';
+import { Button, Typography } from '@mui/material';
+
+
 
 const theme = createTheme({
 
     palette: {
         primary: {
-            main: '#333366',
+            main: '#442d5d',
             mainDark : '#333366'
         },
         secondary: {
@@ -13,8 +16,9 @@ const theme = createTheme({
             gray: '#344054',
 
         },
-        // Add other colors as needed
+
     },
+
 });
 
 export {theme};

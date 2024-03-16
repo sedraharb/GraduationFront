@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {Box, Button, Container, CssBaseline, TextField, Typography} from '@mui/material';
+
 import {authServices} from "/Routes";
 
 import {useRouter} from "next/router";
@@ -14,7 +15,7 @@ import Cookies from 'js-cookie';
 
 export default function LoginPage() {
     const router = useRouter();
-
+//what can this code do
     useEffect(() => {
         if (Cookies.get('auth-token')) {
             router.push('/');
@@ -33,7 +34,7 @@ export default function LoginPage() {
         const response = await authServices.login(email)
         if (response?.status === 200) {
             Notify("colored", `${response?.message || 'Logged in success'}`, "success")
-            await router.push('/');
+            await router.push('/Dashbord');
         }
     };
 
@@ -67,7 +68,7 @@ export default function LoginPage() {
                         transform: 'translate(-50%,-50%)',
                         zIndex: '-1',
                         maxWidth: '737px',
-                        opacity: '.025',
+                        opacity: '0.20',
                     }}
                 />
                 <Typography component="h1" variant="h5" sx={{
