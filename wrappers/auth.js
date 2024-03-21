@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
     switch (response?.status) {
         case 400:
             Notify("colored", `${response?.data?.message}`, "error")
+
             break;
         case 401:
         case 403:
@@ -21,6 +22,7 @@ import Cookies from "js-cookie";
             break;
         case 404:
             Notify("colored", `Not Found`, "error")
+
 
             break;
         case 422 :
@@ -39,7 +41,6 @@ import Cookies from "js-cookie";
             return response
     }
 }
-
 
 
 

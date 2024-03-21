@@ -7,6 +7,7 @@ import {ThemeProvider} from '@mui/material/styles';
 import getConfig from 'next/config';
 import {Layout} from "../layouts";
 import LoginPage from "./auth/login";
+import {responseErrorHandlers} from "../wrappers";
 const {publicRuntimeConfig} = getConfig();
 
 function MyApp({Component, pageProps}) {

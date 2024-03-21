@@ -23,6 +23,7 @@ import DevicesIcon from "@mui/icons-material/Devices";
 import EngineeringRoundedIcon from '@mui/icons-material/EngineeringRounded';
 import {Handshake} from "lucide-react";
 import {Logout} from "@mui/icons-material";
+import GroupsIcon from '@mui/icons-material/Groups';
 import {HomeIcon} from "lucide-react";
 import Image from "next/image";
 
@@ -158,7 +159,8 @@ export function Layout({children}) {
                 <List sx={{ direction: 'rlt' }}>
                     {[
                         { text: 'الصفحة الرئيسية', link: '/Dashbord', icon: <HomeIcon color="#442d5d" /> }, // Example icon for the homepage
-                        { text: 'الأجهزة', link: '/Devices', icon: <DevicesIcon sx={{color:"#442d5d"}} /> }, // Example icon for devices
+                        { text: 'الأجهزة', link: '/devices', icon: <DevicesIcon sx={{color:"#442d5d"}} /> },
+                        { text: 'المستخدمين', link: '/allUsers', icon: <GroupsIcon sx={{color:"#442d5d"}} /> }, // Example icon for devices
                         { text: 'الفنيين', link: '/technicians', icon: <EngineeringRoundedIcon sx={{color:"#442d5d"}} /> }, // Example icon for technicians
                         { text: 'العملاء', link: '/customers', icon: <Handshake color="#442d5d" /> }, // Example icon for customers
                         { text: 'البريد', link: '/mail', icon: <MailIcon sx={{color:"#442d5d"}} /> }, // Example icon for mail
