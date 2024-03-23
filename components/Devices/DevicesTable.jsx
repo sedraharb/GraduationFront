@@ -1,24 +1,23 @@
 import * as React from 'react';
-import {useEffect, useState} from 'react';
-import {DataGrid} from '@mui/x-data-grid';
-import {Notify} from "../../utils";
+import { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
+import { Notify } from "../../utils";
 import TableCell from '@mui/material/TableCell';
 
-import {device} from "../../Routes";
+import { device } from "../../Routes";
 
 
 
 const columns = [
 
-    {field: 'id', headerName: 'ID', width: 0.1,},
-    {field: 'name', headerName: 'First name', width: 130},
-    {field: 'last_name', headerName: 'Last name', width: 130},
-    {field: 'email', headerName: 'Email', width: 170},
-    {field: 'phone', headerName: 'phone', width: 170},
-    {field: 'updated_at', headerName: 'updated_at', width:160},
-    {field: 'created_at', headerName: 'created_at', width: 160},
-    {field: 'address', headerName: 'address', width: 170},
-
+    { field: 'rowNumber', headerName: '#', width: 70 },
+    { field: 'model', headerName: 'Model', width: 130 },
+    { field: 'imei', headerName: 'Imei', width: 130 },
+    { field: 'code', headerName: 'Code', width: 170 },
+    { field: 'clientName', headerName: 'Client Name', width: 170 },
+    { field: 'userName', headerName: 'Technician Name', width: 160 },
+    { field: 'status', headerName: 'Status', width: 160 },
+    { field: 'date_receipt', headerName: 'Date Receipt', width: 160 },
 ];
 
 
@@ -26,31 +25,41 @@ const columns = [
 export function Devices() {
 
     //get devices from Api
-    const[devices,setDevices]=useState([]);
-    useEffect(()=>{
-        const getDevices=async ()=>{
-            // const params={
-            //
-            // }
-            const data=await device.getAll();
-            console.log(data);
+    const [devices, setDevices] = useState([]);
+    useEffect(() => {
+        const getDevices = async () => {
+            const params = {
+                'repaired_in_center': 1,
+                'with': 'client,user',
+                'orderBy':'date_receipt',
+                'dir':'desc'
+            }
+            const data = await device.getAll(params);
             setDevices(data)
-
         };
         getDevices();
 
-    },[])
-    const rows=[
-        {id:1,last_name:"sedra"}
-    ]
+    }, [])
+    const flattenedDevices = devices.map((device, index) => ({
+        id: device.id,
+        rowNumber: index + 1,
+        model: device.model,
+        imei: device.imei,
+        code: device.code,
+        clientName: device.client.name,
+        userName: device.user.name,
+        status: device.status,
+        date_receipt: device.date_receipt
+    }));
+    const rows = flattenedDevices;
     return (
-        <div style={{height: 400, width: '100%'}}>
+        <div style={{ height: 400, width: '100%' }}>
             <DataGrid
                 rows={rows}
                 columns={columns}
                 initialState={{
                     pagination: {
-                        paginationModel: {page: 0, pageSize: 5},
+                        paginationModel: { page: 0, pageSize: 5 },
                     },
                 }}
                 pageSizeOptions={[5, 10]}
