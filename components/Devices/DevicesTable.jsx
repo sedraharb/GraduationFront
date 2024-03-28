@@ -14,15 +14,15 @@ const columns = [
     { field: 'model', headerName: 'Model', width: 130 },
     { field: 'imei', headerName: 'Imei', width: 130 },
     { field: 'code', headerName: 'Code', width: 170 },
-    { field: 'clientName', headerName: 'Client Name', width: 170 },
-    { field: 'userName', headerName: 'Technician Name', width: 160 },
-    { field: 'status', headerName: 'Status', width: 160 },
-    { field: 'date_receipt', headerName: 'Date Receipt', width: 160 },
+    { field: 'clientName', headerName: 'اسم العميل', width: 170 },
+    { field: 'userName', headerName: 'اسم فني الصيانة', width: 160 },
+    { field: 'status', headerName: 'حالة الجهاز', width: 160 },
+    { field: 'date_receipt', headerName: 'تاريخ الاستلام', width: 160 },
 ];
 
 
 
-export function Devices() {
+export function Devices() { 
 
     //get devices from Api
     const [devices, setDevices] = useState([]);
@@ -32,7 +32,8 @@ export function Devices() {
                 'repaired_in_center': 1,
                 'with': 'client,user',
                 'orderBy':'date_receipt',
-                'dir':'desc'
+                'dir':'desc',
+                'deliver_to_client':0
             }
             const data = await device.getAll(params);
             setDevices(data)

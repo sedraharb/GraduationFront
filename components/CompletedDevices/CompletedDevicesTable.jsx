@@ -1,5 +1,8 @@
-import { useEffect, useState } from "react";
+import * as React from 'react';
+import { useEffect, useState } from 'react';
+import { DataGrid } from '@mui/x-data-grid';
 import { completedDevices } from "../../Routes/api/completedDevices";
+
 
 const columns = [
 
@@ -7,15 +10,14 @@ const columns = [
     { field: 'model', headerName: 'Model', width: 130 },
     { field: 'imei', headerName: 'Imei', width: 130 },
     { field: 'code', headerName: 'Code', width: 170 },
-    { field: 'client_name', headerName: 'Client Name', width: 170 },
-    { field: 'user_name', headerName: 'Technician Name', width: 160 },
-    { field: 'cost_to_client', headerName: 'Cost To Client', width: 160 },
-    { field: 'status', headerName: 'Status', width: 160 },
-    { field: 'date_receipt', headerName: 'Date Receipt', width: 160 },
-    { field: 'date_delivery', headerName: 'Date Delivery', width: 160 },
+    { field: 'client_name', headerName: 'اسم العميل', width: 170 },
+    { field: 'user_name', headerName: 'اسم فني الصيانة', width: 160 },
+    { field: 'cost_to_client', headerName: 'الكلفة', width: 160 },
+    { field: 'status', headerName: 'حالة الجهاز', width: 160 },
+    { field: 'date_receipt', headerName: 'تاريخ الاستلام', width: 160 },
+    { field: 'date_delivery', headerName: 'تاريخ التسليم', width: 160 },
 ];
-export  function CompltedDevices(){
-    
+export function CompletedDevices() {
     const [completed_devices, setCompletedDevices] = useState([]);
     useEffect(() => {
         const getDevices = async () => {
@@ -27,8 +29,20 @@ export  function CompltedDevices(){
         };
         getDevices();
     }, [])
-
-    const rows = completed_devices;
+    const rowsWithNumbers = completed_devices.map((row, index) => ({
+        id: row.id,
+        rowNumber: index + 1,
+        model: row.model,
+        imei: row.imei,
+        code: row.code,
+        client_name: row.client_name,
+        user_name: row.user_name,
+        cost_to_client: row.cost_to_client,
+        status: row.status,
+        date_receipt: row.date_receipt,
+        date_delivery: row.date_delivery,
+    }));
+    const rows =  rowsWithNumbers ;
 
     return (
         <div style={{ height: 400, width: '100%' }}>

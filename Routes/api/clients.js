@@ -8,13 +8,13 @@ import axiosInstance from "../../utils/auth/axiosInstance";
 
 const { publicRuntimeConfig } = getConfig();
 
-const USERS_URL = "api/users";
+const CLIENTS_URL = "api/clients";
 const BASE_URL = `${publicRuntimeConfig.apiUrl}`;
 
 const getAll = async (params) => {
   try {
     return await axiosInstance
-      .get(`${BASE_URL}${USERS_URL}`, { params })
+      .get(`${BASE_URL}${CLIENTS_URL}`, { params })
       .then(async (response) => {
         return await response?.data?.body;
       });
@@ -23,6 +23,6 @@ const getAll = async (params) => {
   }
 };
 
-export const users = {
+export const clients = {
   getAll,
 };
