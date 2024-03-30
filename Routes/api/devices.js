@@ -22,7 +22,15 @@ const getAll = async (params) => {
     responseErrorHandlers(error?.response);
   }
 };
+const updateDevice=async (params)=>{
+  try {
+    return await axiosInstance.put(`${BASE_URL}`)
+  }
+  catch (error){
+
+  }
+};
 
 export const device = {
-  getAll,
+  getAll,updateDevice
 };
