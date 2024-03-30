@@ -23,8 +23,15 @@ const getAll = async (params) => {
   }
 };
 const updateDevice=async (params)=>{
+  const {id , ...userName}=params
   try {
-    return await axiosInstance.put(`${BASE_URL}`)
+    return await axiosInstance.put(`${BASE_URL}${DEVICES_URL}/${id}`,{userName}).then(
+      async response=> {
+       console.log(userName);
+        return response?.data
+
+      }
+    );
   }
   catch (error){
 
