@@ -8,13 +8,13 @@ import axiosInstance from "../../utils/auth/axiosInstance";
 
 const { publicRuntimeConfig } = getConfig();
 
-const DEVICES_URL = "api/devices";
+const CLIENTS_URL = "api/clients";
 const BASE_URL = `${publicRuntimeConfig.apiUrl}`;
 
 const getAll = async (params) => {
   try {
     return await axiosInstance
-      .get(`${BASE_URL}${DEVICES_URL}`, { params })
+      .get(`${BASE_URL}${CLIENTS_URL}`, { params })
       .then(async (response) => {
         return await response?.data?.body;
       });
@@ -22,22 +22,7 @@ const getAll = async (params) => {
     responseErrorHandlers(error?.response);
   }
 };
-const updateDevice=async (params)=>{
-  const {id , ...userName}=params
-  try {
-    return await axiosInstance.put(`${BASE_URL}${DEVICES_URL}/${id}`,{userName}).then(
-      async response=> {
-       console.log(userName);
-        return response?.data
 
-      }
-    );
-  }
-  catch (error){
-
-  }
-};
-
-export const device = {
-  getAll,updateDevice
+export const clients = {
+  getAll,
 };

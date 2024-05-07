@@ -1,56 +1,54 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { users } from "../../Routes";
-import { Notify } from "../../utils";
-import TableCell from '@mui/material/TableCell';
-import { Button } from '@mui/material';
-
+import  {clients} from '../../Routes/api/clients';
 
 const columns = [
 
     { field: 'rowNumber', headerName: '#', width: 0.1, },
     { field: 'name', headerName: 'الاسم', width: 130 },
     { field: 'last_name', headerName: 'الكنية', width: 130 },
-    { field: 'email', headerName: 'البريد الالكتروني', width: 170 },
+    { field: 'email', headerName: 'البريد الالكتروني', width: 130 },
+    { field: 'national_id', headerName: 'الرقم الوطني', width: 170 },
     { field: 'phone', headerName: 'رقم الهاتف', width: 170 },
     { field: 'created_at', headerName: 'تاريخ التسجيل', width: 160 },
     { field: 'address', headerName: 'العنوان', width: 170 },
-    { field: 'rule', headerName: 'الدور', width: 170 },
+    { field: 'center_name', headerName: 'اسم المركز', width: 170 },
+    { field: 'devices_count', headerName: 'عدد الاجهزة', width: 170 },
 ];
 
 
-export function UsersTable() {
+export function ClientsTable() {
 
     //get users from Api
 
-    const [allUsers, setUsers] = useState([]);
+    const [allClients, setClients] = useState([]);
     useEffect(() => {
-        const getUsers = async () => {
+        const getClients = async () => {
             const params = {
-                'rule*name': 'فني',
-                'with':'rule'
             }
-            const data = await users.getAll(params);
+            const data = await clients.getAll(params);
             console.log(data);
-            setUsers(data);
+            setClients(data);
         };
-        getUsers()
+        getClients()
     }, [])
 
-    const usersWithNumbers = allUsers.map((user, index) => ({
-        id: user.id,
+    const clientsWithNumbers = allClients.map((client, index) => ({
+        id: client.id,
         rowNumber: index + 1,
-        name: user.name,
-        last_name: user.last_name,
-        email: user.email,
-        phone: user.phone,
-        created_at: user.created_at,
-        address: user.address,
-        rule: user.rule?.name
+        name: client.name,
+        last_name: client.last_name,
+        email: client.email,
+        national_id: client.national_id,
+        phone: client.phone,
+        created_at: client.created_at,
+        address: client.address,
+        center_name: client.center_name,
+        devices_count: client.devices_count,
     }));
 
-    const rows = usersWithNumbers
+    const rows = clientsWithNumbers;
 
 
     return (

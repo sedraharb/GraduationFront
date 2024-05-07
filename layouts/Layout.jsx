@@ -18,14 +18,19 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
-import {BarChart, Devices} from "@mui/icons-material";
+import { BarChart, Devices } from "@mui/icons-material";
 import DevicesIcon from "@mui/icons-material/Devices";
 import EngineeringRoundedIcon from '@mui/icons-material/EngineeringRounded';
-import {Handshake} from "lucide-react";
-import {Logout} from "@mui/icons-material";
+import { Handshake } from "lucide-react";
+import { Logout } from "@mui/icons-material";
 import GroupsIcon from '@mui/icons-material/Groups';
-import {HomeIcon} from "lucide-react";
+import { HomeIcon } from "lucide-react";
 import Image from "next/image";
+import { MdOutlineSendToMobile } from "react-icons/md";
+import { authServices } from '../Routes/api/auth/auth-service';
+import { useRouter } from "next/router";
+import { Notify} from "/utils";
+
 
 
 //=====================================================
@@ -97,7 +102,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 );
 
-export function Layout({children}) {
+export function Layout({ children }) {
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
 
@@ -107,6 +112,17 @@ export function Layout({children}) {
 
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+
+    const router = useRouter();
+
+    const handleLogout = async () => {
+        const response = await authServices.logout()
+
+        if (response?.status == 200) {
+            Notify("colored", 'You have been logged out successfully.', "success");
+            await router.push('/auth/login');
+        }
     };
 
     return (
@@ -142,7 +158,7 @@ export function Layout({children}) {
                                 transform: 'translate(-50%,-50%)',
                                 zIndex: '-1',
                                 maxWidth: '737px',
-                                margin:5
+                                margin: 5
 
                             }}
                         />
@@ -159,11 +175,12 @@ export function Layout({children}) {
                 <List sx={{ direction: 'rlt' }}>
                     {[
                         { text: 'الصفحة الرئيسية', link: '/Dashbord', icon: <HomeIcon color="#442d5d" /> }, // Example icon for the homepage
-                        { text: 'الأجهزة', link: '/devices', icon: <DevicesIcon sx={{color:"#442d5d"}} /> },
-                        { text: 'المستخدمين', link: '/allUsers', icon: <GroupsIcon sx={{color:"#442d5d"}} /> }, // Example icon for devices
-                        { text: 'الفنيين', link: '/technicians', icon: <EngineeringRoundedIcon sx={{color:"#442d5d"}} /> }, // Example icon for technicians
-                        { text: 'العملاء', link: '/customers', icon: <Handshake color="#442d5d" /> }, // Example icon for customers
-                        { text: 'البريد', link: '/mail', icon: <MailIcon sx={{color:"#442d5d"}} /> }, // Example icon for mail
+                        { text: 'الأجهزة', link: '/devices', icon: <DevicesIcon sx={{ color: "#442d5d" }} /> },
+                        { text: 'الأجهزة التي تم تسليمها', link: '/completedDevices', icon: <MdOutlineSendToMobile style={{ color: "#442d5d" }} size={30} /> },
+                        { text: 'المستخدمين', link: '/allUsers', icon: <GroupsIcon sx={{ color: "#442d5d" }} /> }, // Example icon for devices
+                        { text: 'الفنيين', link: '/technicians', icon: <EngineeringRoundedIcon sx={{ color: "#442d5d" }} /> }, // Example icon for technicians
+                        { text: 'العملاء', link: '/clients', icon: <Handshake color="#442d5d" /> }, // Example icon for customers
+                        { text: 'البريد', link: '/mail', icon: <MailIcon sx={{ color: "#442d5d" }} /> }, // Example icon for mail
                     ].map((item, index) => (
                         <ListItem key={index} disablePadding sx={{ display: 'block' }}>
                             <Link href={item.link} passHref>
@@ -192,29 +209,31 @@ export function Layout({children}) {
                 </List>
                 <Divider />
                 <List>
-                        <ListItem disablePadding sx={{ display: 'block' }}>
-                            <ListItemButton
-                                sx={{
+                    <ListItem disablePadding sx={{ display: 'block' }}>
+                        <ListItemButton
+                            sx={{
 
-                                    minHeight: 48,
-                                    justifyContent: open ? 'initial' : 'center',
-                                    px: 2.5,
-                                    bgcolor: open ? 'rgb(60 57 85 / 60%)' : 'white'
-                                }}>
+                                minHeight: 48,
+                                justifyContent: open ? 'initial' : 'center',
+                                px: 2.5,
+                                bgcolor: open ? 'rgb(60 57 85 / 60%)' : 'white'
+                            }}
+                            onClick={handleLogout}
+                        >
 
-                                    <ListItemIcon sx={{
-                                            minWidth: 0,
-                                            mr: open ? 3 : 'auto',
-                                            justifyContent: 'center',
-                                            color:'#442d5d'
+                            <ListItemIcon sx={{
+                                minWidth: 0,
+                                mr: open ? 3 : 'auto',
+                                justifyContent: 'center',
+                                color: '#442d5d'
 
-                                        }}>
-                                        <Logout/>
-                                    </ListItemIcon>
+                            }}>
+                                <Logout />
+                            </ListItemIcon>
 
-                                <ListItemText primary='تسجيل الخروج' sx={{ opacity: open ? 1 : 0}} />
-                            </ListItemButton>
-                        </ListItem>
+                            <ListItemText primary='تسجيل الخروج' sx={{ opacity: open ? 1 : 0 }} />
+                        </ListItemButton>
+                    </ListItem>
                 </List>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
